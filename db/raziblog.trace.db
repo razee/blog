@@ -10,3 +10,15 @@ INSERT INTO locations (x,y) VALUES (?,?) [42102-170]
 03-06 00:09:31 jdbc[2]: exception
 org.h2.jdbc.JdbcSQLException: Table "LOCATIONS" not found; SQL statement:
 INSERT INTO locations (x,y) VALUES (?,?) [42102-170]
+03-07 15:05:22 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "LOCATIONS" not found; SQL statement:
+INSERT INTO locations (x,y) VALUES (?,?) [42102-170]
+03-07 15:05:22 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "LOCATIONS" not found; SQL statement:
+INSERT INTO locations (x,y) VALUES (?,?) [42102-170]
+03-07 15:05:22 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "LOCATIONS" not found; SQL statement:
+INSERT INTO locations (x,y) VALUES (?,?) [42102-170]
+03-07 15:05:31 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "LOCATIONS" not found; SQL statement:
+select id, x, y, from locations [42102-170]

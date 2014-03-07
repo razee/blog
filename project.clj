@@ -2,6 +2,9 @@
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
   :dependencies [[org.clojure/clojure "1.5.1"]
+                 [hiccup "1.0.2"]
+                 [org.clojure/java.jdbc "0.2.3"]
+                 [com.h2database/h2 "1.3.170"]
                  [compojure "1.1.6"]
                  [ring/ring-jetty-adapter "1.1.0"]]
   :main raziblog.handler
