@@ -1,22 +1,18 @@
-(defproject raziblog "0.1.0"
+(defproject sanitycheck "0.1.0"
   :description "Sanity check"
-  :url "sc.razi.si"
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [hiccup "1.0.2"]
-                 [org.clojure/java.jdbc "0.2.3"]
-                 [com.h2database/h2 "1.3.170"]
+                 [org.clojure/java.jdbc "0.3.3"]
+                 [postgresql "9.3-1101.jdbc4"]
                  [compojure "1.1.6"]
-                 [ring/ring-jetty-adapter "1.1.0"]]
-  :aot :all
-  :uberjar-name "raziblog-0.1.0-standalone.jar"
+                 [org.pegdown/pegdown "1.4.2"]
+                 [ring/ring-jetty-adapter "1.1.0"]
+                 [com.cemerick/friend "0.2.0"]
+                 [org.clojure/data.json "0.2.4"]
+                 [ring/ring-json "0.3.1"]]
+  :uberjar-name "sanitycheck-0.1.0-standalone.jar"
   :min-lein-version "2.0.0"
-  :main raziblog.handler
+  :main ^:skip-aot sanitycheck.handler
   :plugins [[lein-ring "0.8.10"]]
-  :ring {:handler raziblog.handler/app}
-  :profiles
-  {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
-                        [hiccup "1.0.5"]
-                        [org.clojure/java.jdbc "0.2.3"]
-                        [com.h2database/h2 "1.3.170"]
-                        [korma "0.3.0-RC6"]
-                        [ring-mock "0.1.5"]]}})
+  :ring {:handler sanitycheck.handler/app}
+  :profiles {:uberjar {:aot :all}})

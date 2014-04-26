@@ -1,19 +1,10 @@
-# raziblog
+Sanity check
+===
 
-FIXME
+## I decided to write my blog completely in Clojure (well a little CSS won't hurt).
+### At the moment I am using:
+ * Compojure + Ring for handling HTTP requests.
+ * Hiccup for HTML(5) rendering.
+ * JDBC + Postgresql for the database.
 
-## Prerequisites
-
-You will need [Leiningen][1] 1.7.0 or above installed.
-
-[1]: https://github.com/technomancy/leiningen
-
-## Running
-
-To start a web server for the application, run:
-
-    lein ring server
-
-## License
-
-Copyright © 2014 FIXME
+ **Anything can (and will) change in the future, this is just my Scratchpad.**
