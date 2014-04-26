@@ -52,16 +52,10 @@
       (middleware/wrap-json-body)
       (middleware/wrap-json-response)))
 
-(defn -main [& args]
-  (let [port (Integer/parseInt (get (System/getenv) "OPENSHIFT_CLOJURE_HTTP_PORT" "8080"))
-        ip (get (System/getenv) "OPENSHIFT_CLOJURE_HTTP_IP" "0.0.0.0")]
-  (jetty/run-jetty #'app {:port port
-                          :host ip
-                          :join? false})))
-;(defn -main
-;  [& [port]]
-;  (let [port (Integer. (or port
-;                           (System/getenv "PORT")
-;                           5000))]
-;    (jetty/run-jetty #'app {:port port
-;                            :join? false})))
+(defn -main
+  [& [port]]
+  (let [port (Integer. (or port
+                           (System/getenv "PORT")
+                           5000))]
+    (jetty/run-jetty #'app {:port port
+                            :join? false})))
