@@ -6,10 +6,11 @@
 (defn create-table-posts []
   (sql/db-do-commands db
     (sql/create-table-ddl
-       :users
+       :posts
        [:id "serial primary key"]
-       [:body "text"]
        [:category "varchar"]
+       [:title "varchar"]
+       [:body "text"]
        [:created_at "date"]
        [:updated_at "date"])))
 
