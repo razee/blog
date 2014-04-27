@@ -9,7 +9,8 @@
                  [ring/ring-jetty-adapter "1.1.0"]
                  [com.cemerick/friend "0.2.0"]
                  [org.clojure/data.json "0.2.4"]
-                 [ring/ring-json "0.3.1"]]
+                 [ring/ring-json "0.3.1"]
+                 [com.cemerick/drawbridge "0.0.6"]]
   :uberjar-name "sanitycheck-0.1.0-standalone.jar"
   :min-lein-version "2.0.0"
   :main ^:skip-aot sanitycheck.handler

@@ -6,7 +6,12 @@
             [compojure.handler :as handler]
             [compojure.route :as route]
             [ring.adapter.jetty :as jetty]
-            [ring.middleware.json :as middleware])
+            [ring.middleware.json :as json]
+            [ring.middleware.session :as session]
+            [ring.middleware.params :as params]
+            [ring.middleware.keyword-params :as kp]
+            [ring.middleware.nested-params :as np]
+            [cemerick.drawbridge])
             (:gen-class))
 
 (cc/defroutes public-routes
@@ -41,6 +46,8 @@
    (cc/GET "/admin/:id/delete" [id]
       (do (db/delete-post id)
         (redirect "/admin"))))
+   (cc/ANY "/repl" [request]
+           cemerick.drawbridge/ring-handler request)
 
 (cc/defroutes app-routes
    public-routes
@@ -49,8 +56,9 @@
 
 (def app
   (-> (handler/api app-routes)
-      (middleware/wrap-json-body)
-      (middleware/wrap-json-response)))
+      (json/wrap-json-body)
+      (json/wrap-json-response)))
+
 
 (defn -main
   [& [port]]
