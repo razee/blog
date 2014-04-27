@@ -35,17 +35,8 @@
           (views/show-all-posts))
   (cc/GET "/posts/:id" [id] (views/show-post id))
   (cc/GET "/login" [] (views/login-form))
-  ;(cc/POST "/show-user"
-   ;        {params :params}
-    ;       (views/show-user params))
-   (route/resources "/"))
-;  (cc/GET "/location/:loc-id"
- ;         [loc-id]
-  ;        (views/location-page loc-id))
-  ;(cc/GET "/all-locations"
-  ;        []
-          ;(views/all-locations-page))
- ; (route/not-found "Not Found"))
+  (cc/GET "/9d060ecd23b33655d1127ee79a923d1859d6665b.html"
+  (route/files "/"))
 
 (cc/defroutes protected-routes
    (cc/GET "/admin" [] (views/admin-page))
