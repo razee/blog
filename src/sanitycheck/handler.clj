@@ -35,7 +35,6 @@
           (views/show-all-posts))
   (cc/GET "/posts/:id" [id] (views/show-post id))
   (cc/GET "/login" [] (views/login-form))
-  (cc/GET "/9d060ecd23b33655d1127ee79a923d1859d6665b.html"
   (route/files "/"))
 
 (cc/defroutes protected-routes
