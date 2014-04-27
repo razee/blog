@@ -1,5 +1,6 @@
 (ns sanitycheck.views.layout
-  (:use ring.util.response)
+  (:use ring.util.response
+        ring.util.anti-forgery)
   (:require [hiccup.page :refer [html5 include-css]]))
 
 
