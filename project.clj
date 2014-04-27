@@ -7,11 +7,13 @@
                  [compojure "1.1.6"]
                  [org.pegdown/pegdown "1.4.2"]
                  [ring/ring-jetty-adapter "1.1.0"]
-                 [com.cemerick/friend "0.2.0"]
+                 [com.cemerick/friend "0.2.0" :exclusions [org.clojure/core.incubator]]
                  [org.clojure/data.json "0.2.4"]
-                 [ring/ring-json "0.3.1"]
+                 [ring/ring-json "0.3.1" :exclusions [ring/ring-core]]
                  [com.cemerick/drawbridge "0.0.6"]
-                 [clj-time "0.7.0"]]
+                 [clj-time "0.7.0"]; :exclusions [org.clojure/clojure]]
+                 [ring/ring-anti-forgery "0.3.1" :exclusions [hiccup]]
+                 ]
   :uberjar-name "sanitycheck-0.1.0-standalone.jar"
   :min-lein-version "2.0.0"
   :main ^:skip-aot sanitycheck.handler
