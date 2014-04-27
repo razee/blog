@@ -56,8 +56,8 @@
 
 (def app
   (-> (handler/api app-routes)
-      (keyword-params/wrap-keyword-params)
-      (nested-params/wrap-nested-params)
+      (kp/wrap-keyword-params)
+      (np/wrap-nested-params)
       (params/wrap-params)
       (session/wrap-session)
       ))
