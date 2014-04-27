@@ -87,14 +87,14 @@
    (l/common "Sanity check - Add post"
       [:h2 "Add post"]
       (f/form-to [:post "/admin/create"]
-      (anti-forgery-field)
        (f/label "title" "Title")
         (f/text-field "title") [:br]
          (f/label "category" "Category") [:br]
          (f/text-field "category") [:br]
          (f/label "body" "Body") [:br]
           (f/text-area {:rows 42} "body") [:br]
-           (f/submit-button "SAVE THAT SHIT YO")))))
+           (f/submit-button "SAVE THAT SHIT YO"))))
+    (anti-forgery-field))
 
 (defn edit-post
   [id]
