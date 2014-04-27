@@ -4,8 +4,7 @@
             [hiccup.page :refer [html5]]
             [hiccup.form :as f]
             [sanitycheck.views.layout :as l]
-            [cemerick.friend :as friend])
-  (:use ring.util.anti-forgery))
+            [cemerick.friend :as friend]))
 
 (defn login-form
   []
@@ -87,7 +86,6 @@
    (l/common "Sanity check - Add post"
       [:h2 "Add post"]
       (f/form-to [:post "/admin/create"]
-       (anti-forgery-field)
        (f/label "title" "Title")
         (f/text-field "title") [:br]
          (f/label "category" "Category") [:br]

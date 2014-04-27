@@ -25,6 +25,7 @@
 (defn common
   [title & body]
   (html5
+   (anti-forgery-field)
    [:title title]
     header-links
     [:body body]))
