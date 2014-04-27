@@ -56,8 +56,11 @@
 
 (def app
   (-> (handler/api app-routes)
-      (json/wrap-json-body)
-      (json/wrap-json-response)))
+      (keyword-params/wrap-keyword-params)
+      (nested-params/wrap-nested-params)
+      (params/wrap-params)
+      (session/wrap-session)
+      ))
 
 
 (defn -main
