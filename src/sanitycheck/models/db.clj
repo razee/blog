@@ -48,7 +48,7 @@
    :posts
    {:title title
        :body body
-       :updated_at (t/today)}
+       :updated_at now}
    ["id=?" (Integer/parseInt id)]))
 
 
