@@ -53,12 +53,12 @@
 
 
 (defn create-post
-  [{:keys [id title category body created_at updated_at]}]
+  [{:keys [id category title body created_at updated_at]}]
   (sql/insert!
    db
    :posts
-   {:title title
-    :category category
+   {:category category
+    :title title
     :body body
     :created_at current_time
     :updated_at current_time}))

@@ -59,8 +59,6 @@
    (cc/GET "/admin/:id/delete" [id]
       (do (db/delete-post id)
         (redirect "/admin"))))
-   (cc/ANY "/repl" [request]
-           drawbridge-handler request)
 
 (cc/defroutes app-routes
    public-routes
