@@ -1,7 +1,10 @@
 (ns sanitycheck.models.db
-  (:require [clojure.java.jdbc :as sql])
+  (:require [clojure.java.jdbc :as sql]
+            [clj-time.core :as t]
+            [clj-time.coerce :as c])
   (:use sanitycheck.models.schema))
 
+(def now (c/to-sql-date (t/today)))
 
 (defn create-table-posts []
   (sql/db-do-commands db
@@ -13,9 +16,6 @@
        [:body "text"]
        [:created_at "date"]
        [:updated_at "date"])))
-
-
-(def current_time (.format (java.text.SimpleDateFormat. "yyyy-MM-dd") (new java.util.Date)))
 
 (defn create-user
   [user]
@@ -48,7 +48,7 @@
    :posts
    {:title title
        :body body
-       :updated_at current_time}
+       :updated_at (t/today)}
    ["id=?" (Integer/parseInt id)]))
 
 
@@ -60,8 +60,8 @@
    {:category category
     :title title
     :body body
-    :created_at current_time
-    :updated_at current_time}))
+    :created_at now
+    :updated_at now}))
 
 
 (defn delete-post
