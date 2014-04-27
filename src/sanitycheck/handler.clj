@@ -35,7 +35,7 @@
           (views/show-all-posts))
   (cc/GET "/posts/:id" [id] (views/show-post id))
   (cc/GET "/login" [] (views/login-form))
-  (route/files "/"))
+  (route/resources "/"))
 
 (cc/defroutes protected-routes
    (cc/GET "/admin" [] (views/admin-page))
@@ -59,9 +59,7 @@
 (def app
   (-> (handler/site app-routes)
       (wrap-anti-forgery)
-      (session/wrap-session)
-      (json/wrap-json-body)
-      (json/wrap-json-response)))
+      (session/wrap-session)))
 
 
 
