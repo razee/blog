@@ -13,6 +13,18 @@
             [ring.middleware.nested-params :as np]
             [cemerick.drawbridge])
             (:gen-class))
+(def drawbridge-handler
+  (-> (cemerick.drawbridge/ring-handler)
+      (kp/wrap-keyword-params)
+      (np/wrap-nested-params)
+      (params/wrap-params)
+      (session/wrap-session)))
+
+(defn wrap-drawbridge [handler]
+  (fn [req]
+    (if (= "/repl" (:uri req))
+      (drawbridge-handler req)
+      (handler req))))
 
 (cc/defroutes public-routes
   (cc/GET "/" [] (views/home-page))
@@ -47,7 +59,7 @@
       (do (db/delete-post id)
         (redirect "/admin"))))
    (cc/ANY "/repl" [request]
-           cemerick.drawbridge/ring-handler request)
+           drawbridge-handler request)
 
 (cc/defroutes app-routes
    public-routes
@@ -56,11 +68,9 @@
 
 (def app
   (-> (handler/api app-routes)
-      (kp/wrap-keyword-params)
-      (np/wrap-nested-params)
-      (params/wrap-params)
-      (session/wrap-session)
-      ))
+      (json/wrap-json-body)
+      (json/wrap-json-response)))
+
 
 
 (defn -main
