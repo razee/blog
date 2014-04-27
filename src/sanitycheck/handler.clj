@@ -1,5 +1,6 @@
 (ns sanitycheck.handler
-  (:use ring.util.response)
+  (:use ring.util.response
+        ring.middleware.anti-forgery)
   (:require [sanitycheck.views.views :as views]
             [sanitycheck.models.db :as db]
             [compojure.core :as cc]
@@ -66,7 +67,9 @@
    (route/not-found "lolnope"))
 
 (def app
-  (-> (handler/api app-routes)
+  (-> (handler/site app-routes)
+      (wrap-anti-forgery)
+      (session/wrap-session)
       (json/wrap-json-body)
       (json/wrap-json-response)))
 
