@@ -25,7 +25,7 @@
 (defn common
   [title & body]
   (html5
-   (anti-forgery-field)
+  [:head [:meta {:name "9d060ecd23b33655d1127ee79a923d1859d6665b" :content "a0cabc30ddb2b143a3d823e1bec06472f0ae742f"}]]
    [:title title]
     header-links
     [:body body]))
