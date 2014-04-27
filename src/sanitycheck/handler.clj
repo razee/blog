@@ -13,6 +13,7 @@
             [ring.middleware.nested-params :as np]
             [cemerick.drawbridge])
             (:gen-class))
+
 (def drawbridge-handler
   (-> (cemerick.drawbridge/ring-handler)
       (kp/wrap-keyword-params)
@@ -78,5 +79,5 @@
   (let [port (Integer. (or port
                            (System/getenv "PORT")
                            5000))]
-    (jetty/run-jetty #'app {:port port
+    (jetty/run-jetty (wrap-drawbridge app) {:port port
                             :join? false})))
