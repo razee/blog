@@ -41,8 +41,7 @@
    (cc/GET "/admin" [] (views/admin-page))
    (cc/GET "/admin/add" [] (views/add-post))
    (cc/POST "/admin/create" [& params]
-      (do (db/create-post params)
-        (redirect "/admin")))
+      (do (db/create-post params)))
    (cc/GET "/admin/:id/edit" [id] (views/edit-post id))
    (cc/PUT "/admin/:id/save" [& params]
       (do (db/update-post params)
@@ -68,5 +67,5 @@
   (let [port (Integer. (or port
                            (System/getenv "PORT")
                            5000))]
-    (jetty/run-jetty #'app {:port port
+    (jetty/run-jetty (wrap-drawbridge app) {:port port
                             :join? false})))
