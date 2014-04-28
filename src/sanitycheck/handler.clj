@@ -41,7 +41,8 @@
    (cc/GET "/admin" [] (views/admin-page))
    (cc/GET "/admin/add" [] (views/add-post))
    (cc/POST "/admin/create" [& params]
-      (do (db/create-post params)))
+      (do (db/create-post params)
+        (redirect "/admin")))
    (cc/GET "/admin/:id/edit" [id] (views/edit-post id))
    (cc/PUT "/admin/:id/save" [& params]
       (do (db/update-post params)
@@ -56,9 +57,10 @@
    (route/not-found "lolnope"))
 
 (def app
-  (-> (handler/site app-routes)
+  (-> app-routes
       (wrap-anti-forgery)
-      (session/wrap-session)))
+      (session/wrap-session)
+      (handler/site)))
 
 
 
