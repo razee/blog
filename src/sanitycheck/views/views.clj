@@ -14,7 +14,8 @@
       [:div {:class "columns small-12"}
        [:h3 "Login"]
        [:div {:class "row"}
-        [:form {:method "POST" :action "login" :class "columns small-4"}]
+       (f/form-to [:post "/login"]
+        (anti-forgery-field)
         [:div "Username" [:input {:type "text" :name "username"}]]
         [:div "Password" [:input {:type "text" :name "password"}]]
         [:div [:input {:type "submit" :class "button" :value "Login"}]]]]]))
@@ -103,6 +104,7 @@
       "Sanity check - Edit post"
       [:h2 (str "Edit post " id)]
       (f/form-to [:put "save"]
+        (anti-forgery-field)
         (f/label "title" "Title")
         (f/text-field "title" (:title post)) [:br]
         (f/label "body" "Body") [:br]
