@@ -18,7 +18,7 @@
         (anti-forgery-field)
         [:div "Username" [:input {:type "text" :name "username"}]]
         [:div "Password" [:input {:type "text" :name "password"}]]
-        [:div [:input {:type "submit" :class "button" :value "Login"}]]]]]))
+        [:div [:input {:type "submit" :class "button" :value "Login"}]])]]]))
 
 (defn show-post
   [id]
