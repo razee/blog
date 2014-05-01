@@ -112,10 +112,10 @@
    db
    ["select * from users"]))
 
-(def friendly-db
+(def friendly-db (atom
   (into {} (for [user (get-all-users)
         :let [u (:username user)]]
-  (assoc {} u user))))
+  (assoc {} u user)))))
 
 
 (derive ::admin ::user)
