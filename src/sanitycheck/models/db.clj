@@ -113,6 +113,7 @@
    ["select * from users"]))
 
 (defn friendly-db
+  []
   (into {} (for [user (get-all-users)
         :let [u (:username user)]]
   (assoc {} u user))))
