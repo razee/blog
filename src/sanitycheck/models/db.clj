@@ -1,10 +1,17 @@
 (ns sanitycheck.models.db
+  (:use markdown.core)
   (:require [clojure.java.jdbc :as sql]
             [clj-time.core :as t]
-            [clj-time.coerce :as c])
+            [clj-time.coerce :as c]
+            [cemerick.friend :as friend]
+            (cemerick.friend [workflows :as workflows]
+                             [credentials :as creds]))
   (:use sanitycheck.models.schema))
 
+
+
 (def now (c/to-sql-date (t/today)))
+
 
 (defn create-table-posts []
   (sql/db-do-commands db
@@ -17,9 +24,30 @@
        [:created_at "date"]
        [:updated_at "date"])))
 
+(defn create-table-users
+  []
+  (sql/db-do-commands db
+    (sql/create-table-ddl
+    :users
+    [:id "serial primary key"]
+    [:username "varchar"]
+    [:password "varchar"]
+    [:email "varchar"]
+    [:roles "varchar"])))
+
 (defn create-user
-  [user]
-  )
+  [{:keys [username password email admin] :as user-data}]
+  (sql/insert!
+   db
+   :users
+   (assoc (dissoc user-data :admin) :password (creds/hash-bcrypt password)
+              :roles (str (into #{::user} (when admin [::admin]))))))
+
+(defn get-user
+  [req]
+  (sql/query
+   db
+   ["select * from users where id=?" (:id req)]))
 
 (defn empty-results
   [res]
