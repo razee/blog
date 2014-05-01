@@ -115,3 +115,16 @@
         (f/text-area {:rows 20} "body" (:body post)) [:br]
         (f/submit-button "Save")))))
 
+(defn fielder
+  [field n text]
+  (list (f/label n text)
+    (field n)
+    [:br]))
+
+(defn registration-page
+  []
+  (f/form-to [:post "/register"]
+     (fielder f/text-field :id "nickname")
+     (fielder f/password-field :pass "password")
+     (fielder f/password-field :pass1 "retype password plz")
+      (f/submit-button "Create account")))
