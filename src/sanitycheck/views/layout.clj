@@ -17,7 +17,7 @@
    "[ "
    [:a {:href "/"} "Home"]
    " | "
-   [:a {:href "/all-posts"} "Show all posts"]
+   [:a {:href "/posts"} "Show all posts"]
    " | "
    [:a {:href "/login"} "Login"]
    " ] "])

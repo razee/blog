@@ -8,20 +8,24 @@
   (:use ring.util.anti-forgery))
 
 (defn login-form
-  []
+  [req]
   (l/common "Sanity check - Login"
+             [:p (if-let [identity (friend/identity req)]
+             (apply str "Logged in, with these roles: "
+               (-> identity friend/current-authentication :roles))
+             "anonymous user")]
      [:div {:class "row"}
       [:div {:class "columns small-12"}
        [:h3 "Login"]
        [:div {:class "row"}
-       (f/form-to [:post "/login"]
-        (anti-forgery-field)
+       [:form {:method "POST" :action "login" :class "columns small-4"}
+             (anti-forgery-field)
         [:div "Username" [:input {:type "text" :name "username"}]]
         [:div "Password" [:input {:type "text" :name "password"}]]
-        [:div [:input {:type "submit" :class "button" :value "Login"}]])]]]))
+        [:div [:input {:type "submit" :class "button" :value "Login"}]]]]]]))
 
 (defn show-post
-  [id]
+  [id r]
   (let [post (db/get-post id)
         {:keys [title body updated_at category]} (nth post 0)]
   (l/common (str "Sanity check - " title)
