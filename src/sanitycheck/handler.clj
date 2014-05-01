@@ -1,17 +1,23 @@
 (ns sanitycheck.handler
-  (:use ring.util.response
-        ring.middleware.anti-forgery)
+  (:use ring.middleware.anti-forgery
+        ring.util.response)
   (:require [sanitycheck.views.views :as views]
             [sanitycheck.models.db :as db]
-            [compojure.core :as cc]
-            [compojure.handler :as handler]
-            [compojure.route :as route]
+            [sanitycheck.routes :as r]
+            (compojure
+              [core :as cc]
+              [handler :as handler]
+              [route :as route])
             [ring.adapter.jetty :as jetty]
-            [ring.middleware.json :as json]
-            [ring.middleware.session :as session]
-            [ring.middleware.params :as params]
-            [ring.middleware.keyword-params :as kp]
-            [ring.middleware.nested-params :as np]
+            (ring.middleware
+              [json :as json]
+              [session :as session]
+              [params :as params]
+              [keyword-params :as kp]
+              [nested-params :as np])
+            [cemerick.friend :as friend]
+            (cemerick.friend [workflows :as workflows]
+                             [credentials :as creds])
             [cemerick.drawbridge])
             (:gen-class))
 
