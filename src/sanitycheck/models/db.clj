@@ -86,8 +86,8 @@
    db
    :posts
    {:category category
-    :title title
-    :body body
+    :title (md-to-html-string title)
+    :body (md-to-html-string body)
     :created_at now
     :updated_at now}))
 
