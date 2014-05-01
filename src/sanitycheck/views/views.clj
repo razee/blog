@@ -107,7 +107,7 @@
     (l/common
       "Sanity check - Edit post"
       [:h2 (str "Edit post " id)]
-      (f/form-to [:put "save"]
+      (f/form-to [:put (str "/admin/" id "/save")]
         (anti-forgery-field)
         (f/label "title" "Title")
         (f/text-field "title" (:title post)) [:br]
