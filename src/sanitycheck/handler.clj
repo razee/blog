@@ -34,40 +34,20 @@
       (drawbridge-handler req)
       (handler req))))
 
-(cc/defroutes public-routes
-  (cc/GET "/" [] (views/home-page))
-  (cc/GET "/all-posts"
-          []
-          (views/show-all-posts))
-  (cc/GET "/posts/:id" [id] (views/show-post id))
-  (cc/GET "/login" [] (views/login-form))
-  (route/resources "/"))
-
-(cc/defroutes protected-routes
-   (cc/GET "/admin" [] (views/admin-page))
-   (cc/GET "/admin/add" [] (views/add-post))
-   (cc/POST "/admin/create" [& params]
-      (do (db/create-post params)
-        (redirect "/admin")))
-   (cc/GET "/admin/:id/edit" [id] (views/edit-post id))
-   (cc/PUT "/admin/:id/save" [& params]
-      (do (db/update-post params)
-        (redirect "/admin")))
-   (cc/GET "/admin/:id/delete" [id]
-      (do (db/delete-post id)
-        (redirect "/admin"))))
-
-(cc/defroutes app-routes
-   public-routes
-   protected-routes
-   (route/not-found "lolnope"))
-
 (def app
-  (-> app-routes
-      (wrap-anti-forgery)
-      (session/wrap-session)
-      (handler/site)))
-
+   (handler/site
+    (friend/authenticate r/app-routes
+     {:login-uri "/login"
+      :default-landing-uri "/"
+      :unauthorized-handler
+        #(-> (str "You do not have sufficient privileges to access " (:uri %))
+                               response
+                                (status 401))
+     :credential-fn (partial creds/bcrypt-credential-fn #(db/friendly-db %))
+      :workflows [(workflows/interactive-form)]})
+   (wrap-anti-forgery r/app-routes) {:cookie-attrs
+                                       {:secure true
+                                        :http-only true}}))
 
 
 (defn -main
