@@ -1,12 +1,12 @@
 (ns sanitycheck.models.db
-  (:use markdown.core)
+  (:use markdown.core
+        sanitycheck.models.schema)
   (:require [clojure.java.jdbc :as sql]
             [clj-time.core :as t]
             [clj-time.coerce :as c]
             [cemerick.friend :as friend]
             (cemerick.friend [workflows :as workflows]
-                             [credentials :as creds]))
-  (:use sanitycheck.models.schema))
+                             [credentials :as creds])))
 
 
 
