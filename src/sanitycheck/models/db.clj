@@ -57,10 +57,10 @@
 
 
 (defn get-post
-  [id]
+  [req]
   (sql/query
      db
-     ["select * from posts where id=?" (Integer/parseInt id)]))
+     ["select * from posts where id=?" (Integer/parseInt req)]))
 
 (defn get-all-posts
   []
@@ -98,3 +98,24 @@
    db
    :posts
    ["id=?" (Integer/parseInt id)]))
+
+(defn delete-user
+  [id]
+  (sql/delete!
+   db
+   :users
+   ["id=?" (Integer/parseInt id)]))
+
+(defn get-all-users
+  []
+  (sql/query
+   db
+   ["select * from users"]))
+
+(def friendly-db
+  (into {} (for [user (get-all-users)
+        :let [u (:username user)]]
+  (assoc {} u user))))
+
+
+(derive ::admin ::user)
