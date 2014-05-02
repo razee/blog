@@ -21,7 +21,7 @@
        [:form {:method "POST" :action "login" :class "columns small-4"}
              (anti-forgery-field)
         [:div "Username" [:input {:type "text" :name "username"}]]
-        [:div "Password" [:input {:type "text" :name "password"}]]
+        [:div "Password" [:input {:type "password" :name "password"}]]
         [:div [:input {:type "submit" :class "button" :value "Login"}]]]]]]))
 
 (defn show-post
