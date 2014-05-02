@@ -43,7 +43,7 @@
         #(-> (str "You do not have sufficient privileges to access " (:uri %))
                                response
                                 (status 401))
-     :credential-fn (partial creds/bcrypt-credential-fn #(db/friendly-db %))
+     :credential-fn (partial creds/bcrypt-credential-fn #((db/friendly-db) %))
       :workflows [(workflows/interactive-form)]})
    (wrap-anti-forgery r/app-routes)))
 
