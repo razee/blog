@@ -14,7 +14,8 @@
               [session :as session]
               [params :as params]
               [keyword-params :as kp]
-              [nested-params :as np])
+              [nested-params :as np]
+              [basic-authentication :as basic])
             [cemerick.friend :as friend]
             (cemerick.friend [workflows :as workflows]
                              [credentials :as creds])
@@ -28,10 +29,15 @@
       (params/wrap-params)
       (session/wrap-session)))
 
+(defn authenticated? [name pass]
+  (= [name pass] [(System/getenv "AUTH_USER") (System/getenv "AUTH_PASS")]))
+
 (defn wrap-drawbridge [handler]
   (fn [req]
-    (if (= "/repl" (:uri req))
-      (drawbridge-handler req)
+    (let [handler (if (= "/repl" (:uri req))
+      (basic/wrap-basic-authentication
+       drawbridge-handler authenticated?)
+      handler)]
       (handler req))))
 
 (def app
