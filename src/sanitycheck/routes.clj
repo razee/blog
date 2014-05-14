@@ -8,12 +8,12 @@
 
 
 (cc/defroutes public-routes
-  (cc/GET "/" [] (views/home-page))
+  (cc/GET "/" [] (views/home))
   (cc/GET "/posts"
           []
           (views/show-all-posts))
   (cc/GET "/posts/:id" [id :as r] (views/show-post id r)) ; (-> id :params (:id))))
-  (cc/GET "/login" req (views/login-form req))
+  (cc/GET "/login" req (views/login-page req))
   (route/resources "/"))
 
 (cc/defroutes protected-routes

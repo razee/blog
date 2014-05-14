@@ -4,50 +4,66 @@
             [hiccup.page :refer [html5]]
             [hiccup.form :as f]
             [sanitycheck.views.layout :as l]
-            [cemerick.friend :as friend])
+            [cemerick.friend :as friend]
+            [net.cgrand.enlive-html :as html])
   (:use ring.util.anti-forgery))
 
-(defn login-form
+
+
+(html/defsnippet post-snippet "sanitycheck/views/post.html"
+  {[:h1] [[:div.post-body (html/nth-of-type 1)]]}
+  [post]
+  [:h1] (html/content (:title post))
+  [:span.author] (html/content "razi")
+  [:span.category] (html/content (:category post))
+  [:div.post-body] (html/content (:body post)))
+
+(html/defsnippet header-links "sanitycheck/views/header.html"
+   [:.header-links]
+   []
+   identity)
+
+(html/deftemplate login-form "sanitycheck/views/login.html"
+   []
+   identity)
+
+(html/deftemplate post-page "sanitycheck/views/post.html"
+  [post]
+  [:title] (html/content (:title post))
+  [:h1] (html/content (:title post))
+  [:span.author] (html/content "razi")
+  [:p.category] (html/content (:category post))
+  [:p.updated_at] (html/content (:updated_at post))
+  [:div.post-body] (html/content (:body post)))
+
+(html/deftemplate home-page "sanitycheck/views/home.html"
+  [posts]
+  [:title] (html/content "Sanity check")
+  [:head] (html/content (header-links))
+  [:body] (html/content (map post-snippet posts)))
+
+(html/deftemplate all-posts-page "sanitycheck/views/post.html"
+ [posts]
+ [:title] (html/content "All posts")
+ [:body] (html/content (map post-snippet posts)))
+
+(defn show-all-posts
+  [])
+
+(defn login-page
   [req]
-  (l/common "Sanity check - Login"
-             [:p (if-let [identity (friend/identity req)]
-             (apply str "Logged in, with these roles: "
-               (-> identity friend/current-authentication :roles))
-             "anonymous user")]
-     [:div {:class "row"}
-      [:div {:class "columns small-12"}
-       [:h3 "Login"]
-       [:div {:class "row"}
-       [:form {:method "POST" :action "login" :class "columns small-4"}
-             (anti-forgery-field)
-        [:div "Username" [:input {:type "text" :name "username"}]]
-        [:div "Password" [:input {:type "password" :name "password"}]]
-        [:div [:input {:type "submit" :class "button" :value "Login"}]]]]]]))
+  (login-form))
+
 
 (defn show-post
   [id r]
-  (let [post (db/get-post id)
-        {:keys [title body updated_at category]} (nth post 0)]
-  (l/common (str "Sanity check - " title)
-   [:h1 title]
-   [:p "Updated on: " updated_at]
-   [:p "Category: " category]
-   [:body body])))
+  (if-let [post (db/get-post id)]
+  (apply str (post-page (nth post 0)))))
 
-(defn show-all-posts
-  []
-  (html5
-   [:ul.posts
-     (for [{:keys [id title]} (db/get-all-posts)]
-       [:li
-         [:a {:href id} title]])]))
-
-(defn all-posts
+(defn home
   []
   (let [posts (db/get-all-posts)]
-    (html5
-     (l/gen-page-head "All posts")
-      (doall posts))))
+    (reduce str (home-page posts))))
 
 (defn post-summary [post]
   (let [{:keys [id title body created_at]} post]
@@ -72,10 +88,10 @@
      [:a {:href (str "/admin/" id "/delete")} "Delete"]]])))
 
 
-(defn home-page []
-  []
-  (l/common "Sanity check - Home"
-  (map post-summary (db/get-all-posts))))
+;(defn home
+;  []
+;  (if-let [posts (db/get-all-posts)]
+;    (apply str (home-page (nth posts 0)))))
 
 (defn admin-page
   []
