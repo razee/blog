@@ -12,7 +12,8 @@
                  [ring/ring-json "0.3.1" :exclusions [ring/ring-core]]
                  [com.cemerick/drawbridge "0.0.6"]
                  [clj-time "0.7.0"]; :exclusions [org.clojure/clojure]]
-                 [ring/ring-anti-forgery "0.3.1" :exclusions [hiccup]]]
+                 [ring/ring-anti-forgery "0.3.1" :exclusions [hiccup]]
+                 [enlive "1.1.5"]]
   :uberjar-name "sanitycheck-0.1.0-standalone.jar"
   :min-lein-version "2.0.0"
   :main ^:skip-aot sanitycheck.handler
