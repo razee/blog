@@ -12,7 +12,6 @@
 
 (def now (c/to-sql-date (t/today)))
 
-
 (defn create-table-posts []
   (sql/db-do-commands db
     (sql/create-table-ddl
@@ -86,8 +85,8 @@
    db
    :posts
    {:category category
-    :title (md-to-html-string title)
-    :body (md-to-html-string body)
+    :title title
+    :body body
     :created_at now
     :updated_at now}))
 

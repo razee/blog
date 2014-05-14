@@ -44,7 +44,7 @@
                                response
                                 (status 401))
      :credential-fn (partial creds/bcrypt-credential-fn #((db/friendly-db) %))
-      :workflows [(workflows/interactive-form)]})
+     :workflows [(workflows/interactive-form)]})
    (wrap-anti-forgery r/app-routes)))
 
 
