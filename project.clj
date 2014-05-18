@@ -15,6 +15,7 @@
                  [ring/ring-anti-forgery "0.3.1" :exclusions [hiccup]]
                  [enlive "1.1.5"]
                  [ring-basic-authentication "1.0.5"]]
+  :repl-options {:nrepl-middleware [lighttable.nrepl.handler/lighttable-ops]})
   :uberjar-name "sanitycheck-0.1.0-standalone.jar"
   :min-lein-version "2.0.0"
   :main ^:skip-aot sanitycheck.handler
