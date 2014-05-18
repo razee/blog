@@ -11,14 +11,18 @@
 
 
 (html/defsnippet post-snippet "sanitycheck/views/post.html"
-  [:body]
-  [[post]]
+  [:.post]
+  [post]
+  [:.post] (html/set-attr :class (str "post-" (:id post)))
   [:a] (html/set-attr :href (str "/posts/" (:id post)))
   [:a] (html/content (:title post))
   ;[:a :spa] (html/content (:title post))
   ;[:span.author] (html/content "razi")
   [:span.category] (html/content (:category post))
   [:.post-body] (html/content (:body post)))
+
+
+
 
 (html/defsnippet header-links "sanitycheck/views/header.html"
    [:.header-links]
@@ -32,19 +36,35 @@
 (html/deftemplate edit-post-page "sanitycheck/views/edit_post.html"
   [post]
   [:form] (html/set-attr :action (str "posts/" (:id post) "/save"))
-  [:.title] (html/prepend (:title post))
-  [:.category] (html/prepend (:category post))
-  [:.body] (html/prepend (:body post))
+  [:.title] identity
+  [:.category] identity
+  [:.body] identity
+                  )
+
+(html/defsnippet admin-summary "sanitycheck/views/post.html"
+  [:.post]
+  [post]
                   )
 
 (html/deftemplate post-page "sanitycheck/views/post.html"
-  [post]
+  [[post]]
   [:title] (html/content (:title post))
   [:h1] (html/content (:title post))
   ;[:span.author] (html/content "razi")
   [:p.category] (html/content (:category post))
   [:p.updated_at] (html/content (:updated_at post))
   [:div.post-body] (html/content (:body post)))
+
+(defn admin-post-summary [post]
+  (let [{:keys [id title body created_at]} post]
+   (html5
+   [:section
+    [:h3 title]
+    [:h4 created_at]
+    [:section body]
+    [:section.actions
+     [:a {:href (str "/admin/" id "/edit")} "Edit"] " / "
+     [:a {:href (str "/admin/" id "/delete")} "Delete"]]])))
 
 (html/deftemplate home-page "sanitycheck/views/home.html"
   [posts]
@@ -67,8 +87,8 @@
 
 (defn show-post
   [id r]
-  (if-let [post (db/get-post id)]
-  (apply str (post-page post))))
+  (let [post (db/get-post id)]
+  (reduce str (post-page post))))
 
 (defn home
   []
@@ -86,16 +106,6 @@
      ;[:a {:href (str "/admin/" id "/edit")} "Edit"] " / "
      ;[:a {:href (str "/admin/" id "/delete")} "Delete"]]])))
 
-(defn admin-post-summary [post]
-  (let [{:keys [id title body created_at]} post]
-   (html5
-   [:section
-    [:h3 title]
-    [:h4 created_at]
-    [:section body]
-    [:section.actions
-     [:a {:href (str "/admin/" id "/edit")} "Edit"] " / "
-     [:a {:href (str "/admin/" id "/delete")} "Delete"]]])))
 
 
 ;(defn home
