@@ -32,9 +32,9 @@
 (html/deftemplate edit-post-page "sanitycheck/views/edit_post.html"
   [post]
   [:form] (html/set-attr :action (str "posts/" (:id post) "/save"))
-  [:.title] (html/append (:title post))
-  [:.category] (html/append (:category post))
-  [:.body] (html/append (:body post))
+  [:.title] (html/prepend (:title post))
+  [:.category] (html/prepend (:category post))
+  [:.body] (html/prepend (:body post))
                   )
 
 (html/deftemplate post-page "sanitycheck/views/post.html"
