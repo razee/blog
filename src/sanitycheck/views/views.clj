@@ -18,16 +18,8 @@
   [:a] (html/content (:title post))
   ;[:a :spa] (html/content (:title post))
   ;[:span.author] (html/content "razi")
-  [:span.category] (html/content (:category post))
+  [:.post-category] (html/content (:category post))
   [:.post-body] (html/content (:body post)))
-
-
-
-
-(html/defsnippet header-links "sanitycheck/views/header.html"
-   [:.header-links]
-   []
-   identity)
 
 (html/deftemplate login-form "sanitycheck/views/login.html"
    []
@@ -36,24 +28,23 @@
 (html/deftemplate edit-post-page "sanitycheck/views/edit_post.html"
   [post]
   [:form] (html/set-attr :action (str "posts/" (:id post) "/save"))
-  [:.title] identity
-  [:.category] identity
-  [:.body] identity
-                  )
+  [:.post-title] identity
+  [:.post-category] identity
+  [:.post-body] identity)
+
 
 (html/defsnippet admin-summary "sanitycheck/views/post.html"
   [:.post]
-  [post]
-                  )
+  [post])
 
-(html/deftemplate post-page "sanitycheck/views/post.html"
+(html/deftemplate show-post-page "sanitycheck/views/post.html"
   [[post]]
   [:title] (html/content (:title post))
   [:h1] (html/content (:title post))
   ;[:span.author] (html/content "razi")
   [:p.category] (html/content (:category post))
   [:p.updated_at] (html/content (:updated_at post))
-  [:div.post-body] (html/content (:body post)))
+  [:.post-body] (html/content (:body post)))
 
 (defn admin-post-summary [post]
   (let [{:keys [id title body created_at]} post]
@@ -63,19 +54,19 @@
     [:h4 created_at]
     [:section body]
     [:section.actions
-     [:a {:href (str "/admin/" id "/edit")} "Edit"] " / "
+     [:a {:href (str "/admin/" id "/edit")} "Edit"] "/"
      [:a {:href (str "/admin/" id "/delete")} "Delete"]]])))
 
 (html/deftemplate home-page "sanitycheck/views/home.html"
   [posts]
-  [:title] (html/content "Sanity check")
-  [:head] (html/content (header-links))
-  [:body] (html/content (map post-snippet posts)))
+  [:title] (html/append "Sanity check")
+  [:.posts] (html/append (map post-snippet posts)))
+
 
 (html/deftemplate all-posts-page "sanitycheck/views/post.html"
  [posts]
  [:title] (html/content "All posts")
- [:body] (html/content (map post-snippet posts)))
+ [:.posts] (html/content (map post-snippet posts)))
 
 (defn show-all-posts
   [])
@@ -88,7 +79,7 @@
 (defn show-post
   [id r]
   (let [post (db/get-post id)]
-  (reduce str (post-page post))))
+  (reduce str (show-post-page post))))
 
 (defn home
   []
