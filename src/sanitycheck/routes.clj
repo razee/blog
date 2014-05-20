@@ -23,7 +23,7 @@
       (do (db/create-post params)
         (redirect "/admin")))
    (cc/GET "/admin/:id/edit" [id] (views/edit-post id))
-   (cc/PUT "/admin/:id/save" [& params]
+   (cc/POST "/admin/:id/save" [& params]
       (do (db/update-post params)
         (redirect "/admin")))
    (cc/GET "/admin/:id/delete" [id]
