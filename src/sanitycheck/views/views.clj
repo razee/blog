@@ -45,7 +45,7 @@
   ;[:span.author] (html/content "razi")
   [:p.category] (html/content (:category post))
   [:p.updated_at] (html/content (:updated_at post))
-  [:.post-body] (html/html-content (:body post)))
+  [:.post-body] (html/html-content (md-to-html-string (:body post))))
 
 (defn admin-post-summary [post]
   (let [{:keys [id title body created_at]} post]
