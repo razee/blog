@@ -6,7 +6,8 @@
             [sanitycheck.views.layout :as l]
             [cemerick.friend :as friend]
             [net.cgrand.enlive-html :as html])
-  (:use ring.util.anti-forgery))
+  (:use ring.util.anti-forgery
+        markdown.core))
 
 
 
@@ -19,7 +20,7 @@
   ;[:a :spa] (html/content (:title post))
   ;[:span.author] (html/content "razi")
   [:.post-category] (html/content (:category post))
-  [:.post-body] (html/content (:body post)))
+  [:.post-body] (html/html-content (md-to-html-string (:body post))))
 
 (html/deftemplate login-form "sanitycheck/views/login.html"
    []
@@ -27,7 +28,7 @@
 
 (html/deftemplate edit-post-page "sanitycheck/views/edit_post.html"
   [post]
-  [:form] (html/set-attr :action (str "posts/" (:id post) "/save"))
+  [:form] (html/set-attr :action (str "/admin/" (:id post) "/save"))
   [:.post-title] identity
   [:.post-category] identity
   [:.post-body] identity)
@@ -44,7 +45,7 @@
   ;[:span.author] (html/content "razi")
   [:p.category] (html/content (:category post))
   [:p.updated_at] (html/content (:updated_at post))
-  [:.post-body] (html/content (:body post)))
+  [:.post-body] (html/html-content (:body post)))
 
 (defn admin-post-summary [post]
   (let [{:keys [id title body created_at]} post]
