@@ -34,6 +34,12 @@
     [:email "varchar"]
     [:roles "varchar"])))
 
+(defn post-to-md
+  [post]
+  (map (fn [post]
+         (assoc (into {} post) :body (md-to-html-string (:body post)))) post))
+
+
 (defn create-user
   [{:keys [username password email admin] :as user-data}]
   (sql/insert!
@@ -56,10 +62,10 @@
 
 
 (defn get-post
-  [req]
+  [id]
   (sql/query
      db
-     ["select * from posts where id=?" (Integer/parseInt req)]))
+     ["select * from posts where id=?" (Integer/parseInt id)]))
 
 (defn get-all-posts
   []
