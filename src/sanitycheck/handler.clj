@@ -40,6 +40,10 @@
       handler)]
       (handler req))))
 
+(defn init
+  []
+  )
+
 (def app
    (handler/site
     (friend/authenticate r/app-routes
@@ -61,3 +65,7 @@
                            5000))]
     (jetty/run-jetty (wrap-drawbridge app) {:port port
                             :join? false})))
+
+(defn destroy
+  []
+  )
