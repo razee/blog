@@ -32,7 +32,7 @@
                 :output-to "resources/public/cljs/"
                 :optimizations :whitespace
                 :pretty-print true}}]}
-  :hooks [leiningen.cljsbuild]
+  ;:hooks [leiningen.cljsbuild]
   :jar true
   :ring {:handler sanitycheck.handler/app}
   :profiles {:uberjar {:aot :all}})
